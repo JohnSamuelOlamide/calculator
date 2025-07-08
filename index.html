@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ABAsio</title>
+
+    <!-- Styles & Scripts -->
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js" defer></script>
+  </head>
+
+  <body>
+    <main>
+      <div class="calculator">
+        <!-- Calculator Case (Background Image) -->
+        <img src="./case.svg" class="calculator-case" alt="Calculator case" />
+
+        <!-- Calculator UI -->
+        <div class="calculator-body">
+          <!-- Display Area -->
+          <section class="displayarea">
+            <span class="mode-display" id="mode-display"
+              >MATH &nbsp;&nbsp;&nbsp;
+
+              <span id="angle-unit">DEG</span>
+            </span>
+            <input type="text" class="display-input" id="display-input" />
+            <input type="text" class="display-input" id="display-output" />
+          </section>
+
+          <!-- Top Button Row -->
+          <section class="buttonarea0">
+            <button class="btn button3"></button>
+            <button class="btn button3"></button>
+
+            <div id="replay">
+              <span id="left-arrow">◀</span>
+              <span>REPLAY</span>
+              <span id="right-arrow">▶</span>
+            </div>
+
+            <button class="btn button3"></button>
+            <button class="btn button3" id="on">ON</button>
+          </section>
+
+          <!-- Scientific Buttons -->
+          <section class="buttonarea1">
+            <!-- Row 1 -->
+            <div class="buttonarea1-row">
+              <button class="btn button1">STO</button>
+              <button class="btn button1"></button>
+              <div id="empty-div"></div>
+              <button class="btn button1 char-button" data-value="^(-1)">
+                x⁻¹
+              </button>
+              <button class="btn button1 font-shrink" id="const-toggle-btn">
+                CONST
+              </button>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="buttonarea1-row">
+              <button class="btn button1"></button>
+              <button class="btn button1 char-button" data-value="√(">
+                √(
+              </button>
+              <button class="btn button1 char-button" data-value="²">x²</button>
+              <button class="btn button1 char-button" data-value="^">^</button>
+              <button class="btn button1 char-button" data-value="log (">
+                log
+              </button>
+              <button class="btn button1">ln</button>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="buttonarea1-row">
+              <button class="btn button1 char-button" data-value="-">
+                (—)
+              </button>
+              <button class="btn button1 char-button" data-value="π">π</button>
+              <button class="btn button1 char-button" data-value="mod">
+                mod
+              </button>
+              <button class="btn button1 char-button" data-value="sin (">
+                sin
+              </button>
+              <button class="btn button1 char-button" data-value="cos (">
+                cos
+              </button>
+              <button class="btn button1 char-button" data-value="tan (">
+                tan
+              </button>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="buttonarea1-row">
+              <button class="btn button1">RCL</button>
+              <button class="btn button1" id="angle-mode-toggle">DEG</button>
+              <button class="btn button1 char-button" data-value="(">(</button>
+              <button class="btn button1 char-button" data-value=")">)</button>
+              <button class="btn button1 char-button" data-value=",">,</button>
+              <button class="btn button1">M+</button>
+            </div>
+          </section>
+
+          <!-- Numeric & Operator Buttons -->
+          <section class="buttonarea2">
+            <button class="btn button2 char-button" data-value="7">7</button>
+            <button class="btn button2 char-button" data-value="8">8</button>
+            <button class="btn button2 char-button" data-value="9">9</button>
+            <button class="btn button2 remove-btn" id="del">DEL</button>
+            <button class="btn button2 remove-btn" id="ac">AC</button>
+
+            <button class="btn button2 char-button" data-value="4">4</button>
+            <button class="btn button2 char-button" data-value="5">5</button>
+            <button class="btn button2 char-button" data-value="6">6</button>
+            <button class="btn button2 char-button" data-value="×">×</button>
+            <button class="btn button2 char-button" data-value="÷">÷</button>
+
+            <button class="btn button2 char-button" data-value="1">1</button>
+            <button class="btn button2 char-button" data-value="2">2</button>
+            <button class="btn button2 char-button" data-value="3">3</button>
+            <button class="btn button2 char-button" data-value="+">+</button>
+            <button class="btn button2 char-button" data-value="-">-</button>
+
+            <button class="btn button2 char-button" data-value="0">0</button>
+            <button class="btn button2 char-button" data-value=".">.</button>
+            <button class="btn button2 char-button" data-value="E">EXP</button>
+            <button class="btn button2" id="ans-button">ANS</button>
+            <button class="btn button2" id="eval">=</button>
+          </section>
+        </div>
+      </div>
+    </main>
+    <div class="popup" id="constants-popup">
+      <div class="constants-popup">
+        <h1>Constants</h1>
+        <div class="constants-container">
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="π"
+            title="Pi (π)"
+          >
+            π
+          </button>
+
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="6.62607015e-34"
+            title="Planck Constant (h)"
+          >
+            h
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="6.67430e-11"
+            title="Gravitational Constant (G)"
+          >
+            G
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="299792458"
+            title="Speed of Light (c)"
+          >
+            c
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="1.602176634e-19"
+            title="Elementary Charge (e)"
+          >
+            e⁻
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="9.80665"
+            title="Standard Gravity (g)"
+          >
+            g
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="6.02214076e23"
+            title="Avogadro's Number (Nₐ)"
+          >
+            Nₐ
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="1.380649e-23"
+            title="Boltzmann Constant (k)"
+          >
+            k
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="8.8541878128e-12"
+            title="Vacuum Permittivity (ε₀)"
+          >
+            ε₀
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="7.2973525693e-3"
+            title="Fine-structure Constant (α)"
+          >
+            α
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="8.314462618"
+            title="Gas Constant (R)"
+          >
+            R
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="5.670374419e-8"
+            title="Stefan–Boltzmann Constant (σ)"
+          >
+            σ
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="1.616255e-35"
+            title="Planck Length (lₚ)"
+          >
+            lₚ
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="2.176434e-8"
+            title="Planck Mass (mₚ)"
+          >
+            mₚ
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="5.391247e-44"
+            title="Planck Time (tₚ)"
+          >
+            tₚ
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="9.10938356e-31"
+            title="Electron Mass (mₑ)"
+          >
+            mₑ
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="1.67262192369e-27"
+            title="Proton Mass (mₚ)"
+          >
+            mₚ
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="1.67492749804e-27"
+            title="Neutron Mass (mₙ)"
+          >
+            mₙ
+          </button>
+          <button
+            class="btn button2 constant-btn char-button"
+            data-value="96485.33212"
+            title="Faraday Constant (F)"
+          >
+            F
+          </button>
+        </div>
+      </div>
+      <!-- <div class="memory-popup">
+        <h1>Memory</h1>
+        <div class="memory-container">
+          <button
+            class="btn button2 memory-btn char-button"
+            data-value="π"
+            title="Pi (π)"
+          >
+            π
+          </button>
+
+          <button
+            class="btn button2 memory-btn char-button"
+            data-value="6.62607015e-34"
+            title="Planck Constant (h)"
+          >
+            h
+          </button>
+          <button
+            class="btn button2 memory-btn char-button"
+            data-value="6.67430e-11"
+            title="Gravitational Constant (G)"
+          >
+            G
+          </button>
+          <button
+            class="btn button2 memory-btn char-button"
+            data-value="299792458"
+            title="Speed of Light (c)"
+          >
+            c
+          </button>
+          <button
+            class="btn button2 memory-btn char-button"
+            data-value="1.602176634e-19"
+            title="Elementary Charge (e)"
+          >
+            e⁻
+          </button>
+          <button
+            class="btn button2 memory-btn char-button"
+            data-value="9.80665"
+            title="Standard Gravity (g)"
+          >
+            g
+          </button>
+          <button
+            class="btn button2 memory-btn char-button"
+            data-value="6.02214076e23"
+            title="Avogadro's Number (Nₐ)"
+          >
+            Nₐ
+          </button>
+          <button
+            class="btn button2 memory-btn char-button"
+            data-value="1.380649e-23"
+            title="Boltzmann Constant (k)"
+          >
+            k
+          </button>
+          <button
+            class="btn button2 memory-btn char-button"
+            data-value="8.8541878128e-12"
+            title="Vacuum Permittivity (ε₀)"
+          >
+            ε₀
+          </button>
+        </div>
+      </div> -->
+    </div>
+
+    <p class="copy">&copy; All rights reserved Samuel John 2025</p>
+  </body>
+</html>
