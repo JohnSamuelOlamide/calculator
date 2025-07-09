@@ -3,6 +3,7 @@ const displayInput = document.querySelector("#display-input");
 const displayOutput = document.querySelector("#display-output");
 const onBtn = document.querySelector("#on");
 const constBtn = document.querySelector("#const-toggle-btn");
+const preloader = document.querySelector(".preloader");
 
 const clearBtn = document.querySelector("#ac");
 const delBtn = document.querySelector("#del");
@@ -22,7 +23,7 @@ var angleMode = {
 };
 
 let ans = null;
-let errorMsg = "Error";
+let errorMsg = "Syntax Error";
 
 // ========== UI Display Functions ==========
 function hideInput() {
@@ -37,6 +38,10 @@ function showInput() {
 
 // ========== Startup Animation ==========
 window.addEventListener("load", () => {
+  preloader.style.opacity = "0";
+  setTimeout(() => {
+    preloader.style.display = "none";
+  }, 400);
   displayOutput.value = "ABAsio";
   displayInput.style.display = "none";
   allButtons.forEach((btn) => (btn.disabled = true));
@@ -176,9 +181,12 @@ function evaluate(inputString) {
     let result = Function(`"use strict"; return (${expression})`)();
 
     // Handle invalid result
-    if (typeof result !== "number" || !isFinite(result)) {
+    if (!isFinite(result)) {
       errorMsg = "Math Error";
-      throw new Error("Invalid result");
+      throw new Error(errorMsg);
+    } else if (isNaN(result)) {
+      errorMsg = "Syntax Error";
+      throw new Error(errorMsg);
     }
 
     // Precision adjustment
