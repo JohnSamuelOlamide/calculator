@@ -143,7 +143,7 @@ function evaluate(inputString) {
     let expression = inputString
       .replace(/×/g, "*")
       .replace(/÷/g, "/")
-      .replace(/\^/g, "**")
+      .replace(/\^/g, "power")
       .replace(/²/g, "**2")
       .replace(/mod/g, "%")
       .replace(/E/g, "e")
@@ -173,6 +173,9 @@ function evaluate(inputString) {
     expression = expression
       .replace(/(?<=[0-9])\(/g, "*(")
       .replace(/\*\*/g, "@");
+    
+    expression = expression
+      .replace(/power/g, "**");
 
     // Empty input
     if (expression.trim() === "") return 0;
