@@ -144,17 +144,17 @@ function evaluate(inputString) {
       .replace(/×/g, "*")
       .replace(/÷/g, "/")
       .replace(/\^/g, "power")
-      .replace(/²/g, "**2")
+      .replace(/²/g, "power2")
       .replace(/mod/g, "%")
       .replace(/E/g, "e")
 
       // π and ans replacements
-      .replace(/(?<=[0-9])π/g, `*${Math.PI}`)
-      .replace(/(?<=[+\-*/.%e])π/g, `${Math.PI}`)
-      .replace(/π/g, `${Math.PI}`)
-      .replace(/(?<=[0-9])ans/g, `*${ans}`)
-      .replace(/(?<=[+\-*/.%e])ans/g, `${ans}`)
-      .replace(/ans/g, ans)
+      .replace(/(?<=[0-9])π/g, `*(${Math.PI})`)
+      .replace(/(?<=[+\-*/.%e])π/g, `(${Math.PI})`)
+      .replace(/π/g, `(${Math.PI})`)
+      .replace(/(?<=[0-9])ans/g, `*(${ans})`)
+      .replace(/(?<=[+\-*/.%e])ans/g, `(${ans})`)
+      .replace(/ans/g, `(${ans})`)
 
       // Functions
       .replace(/√\(/g, "Math.sqrt(")
@@ -167,15 +167,39 @@ function evaluate(inputString) {
 
       // Clean leading zeros
       .replace(/\b0+(\d)/g, "$1");
-    console.log(expression);
 
     // Implicit multiplication: 2( or a( → 2*(
     expression = expression
-      .replace(/(?<=[0-9])\(/g, "*(")
+      .replace(/(?<=[0-9\)])\(/g, "*(")
       .replace(/\*\*/g, "@");
+
+    expression = expression.replace(/power/g, "**");
+
+    expression = expression.trim();
+
+    // Fn to check if no of "(" match no of ")" then appends a ")" to the end if false
+    var str = expression;
+    let noOfBrace1 = 0;
+    let noOfBrace2 = 0;
+    for (i in str) {
+      if (str[i].search(/\(/g) != -1) {
+        noOfBrace1 += 1;
+      }
+      if (str[i].search(/\)/g) != -1) {
+        noOfBrace2 += 1;
+      }
+    }
+
     
-    expression = expression
-      .replace(/power/g, "**");
+    // console.log("value of noOfBrace1 is:" + noOfBrace1);
+    // console.log("value of noOfBrace2 is:" + noOfBrace2);
+
+    let brace1Deficit = noOfBrace1 - noOfBrace2;
+    for (let i = 0; i < brace1Deficit; i++) {
+      expression += ")";
+    }
+
+    console.log(expression);
 
     // Empty input
     if (expression.trim() === "") return 0;
