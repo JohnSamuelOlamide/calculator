@@ -94,14 +94,18 @@ clearBtn.addEventListener("click", () => {
 // DEL - Delete last character
 delBtn.addEventListener("click", () => {
   let val = displayInput.value;
+  let valSlice2 = val.slice(-2).toLowerCase();
   let valSlice3 = val.slice(-3).toLowerCase();
   let valSlice5 = val.slice(-5).toLowerCase();
-  if (valSlice3 === "ans" || valSlice3 === "mod") {
+  if (valSlice2 === "√(") {
+    displayInput.value = val.slice(0, -2);
+  } else if (valSlice3 === "ans" || valSlice3 === "mod") {
     displayInput.value = val.slice(0, -3);
   } else if (
     valSlice5 === "sin (" ||
     valSlice5 === "cos (" ||
     valSlice5 === "tan (" ||
+    valSlice5 === "^(-1)" ||
     valSlice5 === "log ("
   ) {
     displayInput.value = val.slice(0, -5);
