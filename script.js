@@ -93,7 +93,21 @@ clearBtn.addEventListener("click", () => {
 
 // DEL - Delete last character
 delBtn.addEventListener("click", () => {
-  displayInput.value = displayInput.value.slice(0, -1);
+  let val = displayInput.value;
+  let valSlice3 = val.slice(-3).toLowerCase();
+  let valSlice5 = val.slice(-5).toLowerCase();
+  if (valSlice3 === "ans" || valSlice3 === "mod") {
+    displayInput.value = val.slice(0, -3);
+  } else if (
+    valSlice5 === "sin (" ||
+    valSlice5 === "cos (" ||
+    valSlice5 === "tan (" ||
+    valSlice5 === "log ("
+  ) {
+    displayInput.value = val.slice(0, -5);
+  } else {
+    displayInput.value = val.slice(0, -1);
+  }
   displayOutput.value = "";
   showInput();
 });
@@ -190,7 +204,6 @@ function evaluate(inputString) {
       }
     }
 
-    
     // console.log("value of noOfBrace1 is:" + noOfBrace1);
     // console.log("value of noOfBrace2 is:" + noOfBrace2);
 
